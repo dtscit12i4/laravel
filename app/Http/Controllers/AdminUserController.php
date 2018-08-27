@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\AdminUser;
+use App\Models\AdminUser;
+use App\Http\Requests\FormUser;
 
 class AdminUserController extends Controller
 {
@@ -18,13 +19,7 @@ class AdminUserController extends Controller
         return view('admin.login');
     }
 
-    public function store(Request $request) {
-
-        // Validate the user
-        $request->validate([
-            'login_name' => 'required',
-            'password' => 'required'
-        ]);
+    public function store(FormUser $request) {
 
         // Log the user In
         $credentials = $request->only('login_name','password');

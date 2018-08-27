@@ -34,10 +34,13 @@
                                 <td>{{ $user->login_name }}</td>
                                 <td>{{ $user->role ? 'Admin' : 'NormalUser' }}</td>
                                 <td>
-                                    {{ Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE']) }}
-                                   {{ Form::button('Delete', ['type'=> 'submit', 'class'=>'btn btn-success btn-sm', 'onclick' => 'return confirm("Ban chac chan muon xoa?")']) }}
-                                   {{ link_to_route('users.edit', 'Edit', $user->id, ['class'=>'btn btn-success btn-sm', 'onclick' => 'return confirm("Ban chac chan muon sua?")']) }}
-
+                                    
+                                    <form method="POST" action="{{ route('users.destroy', $user->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                   <button class = 'btn btn-success btn-sm' type="submit" onclick='return confirm("Ban chac chan muon xoa?")'>Delete</button>
+                                   <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success btn-sm" onclick='return confirm("Ban chac chan muon sua?")'>Edit</a>
+                                    </form>
                                 </td>
 
                             </tr>

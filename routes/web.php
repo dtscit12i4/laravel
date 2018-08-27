@@ -10,6 +10,7 @@ Route::prefix('admin')->group(function() {
         Route::get('/', 'UsersController@index')->name('home');
         // Users
         Route::resource('/users','UsersController');
+        Route::get('/users/{id}/get', 'UsersController@getdata');
         // Logout
         Route::get('/logout','AdminUserController@logout');
         Route::resource('/register','RegisterController');

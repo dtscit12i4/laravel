@@ -9,20 +9,26 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
 
-    {{ Html::style('assets/css/bootstrap.min.css') }}
+    <link href="{{ url('assets/css/bootstrap.min.css') }}" rel="stylesheet"/>
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> --}}
 
-    {{ Html::style('assets/css/animate.min.css') }}
 
-    {{ Html::style('assets/css/paper-dashboard.css') }}
+    <link href="{{ url('assets/css/animate.min.css') }}" rel="stylesheet"/>
 
-    {{ Html::style('http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css') }}
+    <link href="{{ url('assets/css/paper-dashboard.css') }}" rel="stylesheet"/>
 
-    {{ Html::style('https://fonts.googleapis.com/css?family=Muli:400,300') }}
+    <link href="{{ url('http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css') }}" rel="stylesheet">
 
-    {{ Html::style('assets/css/themify-icons.css') }}
+    <link href='{{ url('https://fonts.googleapis.com/css?family=Muli:400,300') }}' rel='stylesheet' type='text/css'>
 
-    {{ Html::style('assets/css/style.css') }}
+    <link href="{{ url('assets/css/themify-icons.css') }}" rel="stylesheet"/>
 
+    <link href="{{ url('assets/css/style.css') }}" rel="stylesheet"/>
+
+    <script type="text/javascript" src="{{ url('assets/js/jquery.1.10.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('assets/js/bootstrap.min.js') }}"></script>
+    {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
+    <script type="text/javascript" src="{{ url('assets/js/script.js') }}"></script>
 
 </head>
 <body>
@@ -114,8 +120,5 @@
 
 </body>
 
-{{ Html::script('assets/js/jquery-1.10.2.js') }}
-{{ Html::script('assets/js/bootstrap.min.js') }}
-{{ Html::script('assets/js/script.js') }}
-
+@yield('script')
 </html>

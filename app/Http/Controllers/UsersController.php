@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\AdminUser;
+use App\Models\AdminUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,6 +11,60 @@ class UsersController extends Controller
     public function index() {
         $users = AdminUser::all();
         return view('admin.users.index', compact('users'));
+    }
+
+    public function show($id) {
+        $users = AdminUser::find($id);
+        echo '<p>'.$users->login_name.'</p>';
+    }
+
+    public function getdata($id) {
+        $users = AdminUser::find($id);
+        $template = 
+         '
+            <div class="form-group">
+                <label for="name">First Name:</label>
+                <input type="text" name="firstname" placeholder="firstname" id="firstname" value="'.$users->firstname.'" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="name">Last Name:</label>
+                <input type="text" name="lastname" placeholder="lastname" id="lastname" value="'.$users->lastname.'" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Login Name:</label>
+                <input type="text" name="login_name" placeholder="login_name" id="login_name" value="'.$users->login_name.'" class="form-control" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="Password" id="password" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirmation">Confirm Password:</label>
+                <input type="password" name="password_confirmation" placeholder="Confirm Password" id="password_confirmation" class="form-control">
+            </div>';
+
+        if ( $users->role == 1) {
+            $template .= '<div class="form-group">
+                <label for="address">Role:</label>
+                Admin <input type="radio" name="role" value="1" checked />
+                NormalUser <input type="radio" name="role" value="0" />
+                </div>
+            ';
+        }
+        else {
+            $template .= '<div class="form-group">
+                <label for="address">Role:</label>
+                Admin <input type="radio" name="role" value="1" />
+                NormalUser <input type="radio" name="role" value="0" checked />
+                </div>
+            ';
+        }
+
+        echo $template;
     }
 
     public function destroy($id) {
@@ -28,22 +82,17 @@ class UsersController extends Controller
     }
 
     public function store(Request $request) {
-        $sql='';
         $tukhoa = $request->tukhoa;
         $roles = $request->roles;
+        $users = AdminUser::on();
+        $condition = [];
         if (isset($tukhoa)) {
-            $sql .= " where login_name = '".$tukhoa."'";
+            $condition[] = ['login_name','like','%'.$tukhoa.'%'];
         }
         if (isset($roles)) {
-            if ($sql=='') {
-                $sql .= " where role = ".$roles;
-            }
-            else {
-                $sql .= " and role = ".$roles;
-            }
+            $condition[] = ['role','=',$roles];
         }
-        $sql = "select * from admin_users".$sql;
-        $result = DB::select($sql);
+        $result = $users->where($condition)->get();
         return view('admin.users.result', compact('result'));
     }
 
@@ -70,12 +119,12 @@ class UsersController extends Controller
         }
         // Save the data
         $user->save();
-
+        session()->flash('msg','You have been edit successful');
         // Sign the user in
         // auth()->login($user);
 
         // Redirect to
-        return redirect('/admin');
+        return 1;
 
     }
 }

@@ -1,7 +1,8 @@
 <?php
 namespace App\Http\Controllers;
-use App\AdminUser;
+use App\Models\AdminUser;
 use Illuminate\Http\Request;
+use App\Http\Requests\RegisterUser;
 
 class RegisterController extends Controller
 {
@@ -9,15 +10,7 @@ class RegisterController extends Controller
         return view('admin.users.create');
     }
 
-    public function store(Request $request) {
-
-        // Validate the user
-        $request->validate([
-           'firstname' => 'required',
-           'lastname' => 'required',
-            'login_name' => 'required',
-            'password' => 'required|confirmed',
-        ]);
+    public function store(RegisterUser $request) {
 
         // Save the data
         $user = AdminUser::create([
@@ -28,7 +21,7 @@ class RegisterController extends Controller
             'role' => $request->role,
 
         ]);
-
+        session()->flash('msg','You have been created user successful');
         // Sign the user in
         // auth()->login($user);
 
