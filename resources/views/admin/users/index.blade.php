@@ -30,7 +30,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Edit user</h4>
+        <h4 class="modal-title" id="myModalLabel">Create/Edit user</h4>
       </div>
       <div class="modal-body">
       </div>
@@ -42,6 +42,9 @@
   </div>
 </div>
         <div class="col-md-12">
+            <button class='btn btn-success btn-sm create-user'>Add User</button>
+            <br />
+            <br />
             @include('admin.layouts.message')
             <div class="card">
                 <div class="header">
@@ -71,9 +74,9 @@
                                     {{-- <form method="POST" action="{{ route('users.destroy', $user->id) }}"> --}}
                                     {{-- @csrf --}}
                                     {{-- @method('DELETE') --}}
-                                   <button class='btn btn-success btn-sm delete-user' data-token="{{ csrf_token() }}" data-id="{{ $user->id }}">Delete</button>
+                                   <button class='btn btn-success btn-sm delete-user' data-id="{{ $user->id }}">Delete</button>
                                    {{-- <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success btn-sm" onclick='return confirm("Ban chac chan muon sua?")'>Edit</a> --}}
-                                   <a href="javascript:void(0)" data-token="{{ csrf_token() }}" data-id="{{ $user->id }}" class="btn btn-success btn-sm edit-user">Edit</a>
+                                   <a href="javascript:void(0)" data-id="{{ $user->id }}" class="btn btn-success btn-sm edit-user">Edit</a>
                                     {{-- </form> --}}
                                 </td>
 
@@ -92,13 +95,15 @@
 @section('script')
     <script type="text/javascript">
         $().ready(function(){
+
+            // delete user
+
             $('.delete-user').click(function(){
                 const id = $(this).data('id');
                 $('#myModal .modal-body').html("");
                 $('#delete-btn').off('click');
-                const token = $(this).data('token');
+                // const token = $(this).data('token');
                 $.ajax({
-                    type : "get",
                     dataType : "text",
                     url : "/admin/users/" + id,
                     success : function(result)
@@ -121,19 +126,23 @@
                 });
                 $('#myModal').modal();
             });
+
+            // edit user
+
             $('.edit-user').click(function(){
                 const id = $(this).data('id');
                 $('#myModal1 .modal-body').html("");
                 $('#edit-btn').off('click');
-                const token = $(this).data('token');
+                // const token = $(this).data('token');
                 $.ajax({
-                    type : "get",
                     dataType : "text",
                     url : "/admin/users/" + id + "/get",
                     success : function(result)
                     {
                         $('#myModal1 .modal-body').html(result);
+                        $('#myModal1').modal();
                         $('#edit-btn').click(function(){
+                            $('#myModal1 #content-edit').remove();
                             const data = {
                                 _method: 'PUT',
                                 _token: token,
@@ -144,6 +153,7 @@
                             };
                             if ($('#password').val()) {
                                 data.password = $('#password').val();
+                                data.password_confirmation = $('#password_confirmation').val();
                             }
                             $.ajax({
                                 type : "post",
@@ -162,7 +172,7 @@
                                         $.each( errors.errors, function( key, value ) {
                                             li += '<li>' + value +'</li>'
                                         });
-                                        var content = `<div class="alert alert-danger">
+                                        var content = `<div id="content-edit" class="alert alert-danger">
                                                 <ul>
                                                     ${li}
                                                 </ul>
@@ -174,7 +184,63 @@
                         });
                     },
                 });
-                $('#myModal1').modal();
+                // $('#myModal1').modal();
+            });
+
+            // create user
+            $('.create-user').click(function(){
+                $('#myModal1 .modal-body').html("");
+                $('#edit-btn').off('click');
+                // const token = $(this).data('token');
+                $.ajax({
+                    dataType : "text",
+                    url : "/admin/register",
+                    success : function(result)
+                    {
+                        $('#myModal1 .modal-body').html(result);
+                        $('#myModal1').modal();
+                        $('#edit-btn').click(function(){
+                            $('#myModal1 #content-create').remove();
+                            const data = {
+                                _token: token,
+                                firstname: $('#firstname').val(),
+                                lastname: $('#lastname').val(),
+                                password: $('#password').val(),
+                                password_confirmation: $('#password_confirmation').val(),
+                                login_name: $('#login_name').val(),
+                                role: $("input[name='role']:checked").val(),
+                            };
+                            
+                            $.ajax({
+                                type : "post",
+                                dataType : "json",
+                                url : "/admin/register",
+                                data : data,
+                                success : function(result)
+                                {
+                                    $('#myModal1').modal('toggle');
+                                    location.reload();
+                                },
+                                error: function(data){
+                                    var errors = data.responseJSON;
+                                    if (errors) {
+                                        var li = '';
+                                        $.each( errors.errors, function( key, value ) {
+                                            li += '<li>' + value +'</li>'
+                                        });
+                                        var content = `<div id="content-create" class="alert alert-danger">
+                                                <ul>
+                                                    ${li}
+                                                </ul>
+                                            </div>`;
+                                        $('#myModal1 .modal-body').prepend(content);
+                                    }
+                                }
+                            });
+                        });
+                    },
+                });
+                // $('#myModal1').modal();
             });
         })
     </script>

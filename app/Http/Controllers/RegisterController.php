@@ -7,7 +7,8 @@ use App\Http\Requests\RegisterUser;
 class RegisterController extends Controller
 {
     public function index() {
-        return view('admin.users.create');
+        // return view('admin.users.create');
+        return view('admin.users.create1');
     }
 
     public function store(RegisterUser $request) {
@@ -26,7 +27,8 @@ class RegisterController extends Controller
         // auth()->login($user);
 
         // Redirect to
-        return redirect('/admin');
+        // return redirect('/admin');
+        return 1;
 
     }
 }

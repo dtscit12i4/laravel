@@ -14,12 +14,12 @@
                     <p>Users</p>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ url('/admin/register') }}">
                     <i class="fa fa-users"></i>
                     <p>Add Users</p>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </div>
