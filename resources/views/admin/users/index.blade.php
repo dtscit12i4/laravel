@@ -105,7 +105,7 @@
                 // const token = $(this).data('token');
                 $.ajax({
                     dataType : "text",
-                    url : "/admin/users/" + id,
+                    url : "/admin/getname/" + id,
                     success : function(result)
                     {
                         $('#myModal .modal-body').html(result);
@@ -113,8 +113,8 @@
                             $.ajax({
                                 type : "post",
                                 dataType : "text",
-                                url : "/admin/users/" + id,
-                                data : {_method: 'DELETE', _token: token},
+                                url : "/admin/getname/" + id,
+                                data : {_token: token},
                                 success : function(result)
                                 {
                                     $('#myModal').modal('toggle');
@@ -136,7 +136,7 @@
                 // const token = $(this).data('token');
                 $.ajax({
                     dataType : "text",
-                    url : "/admin/users/" + id + "/get",
+                    url : "/admin/edit/" + id,
                     success : function(result)
                     {
                         $('#myModal1 .modal-body').html(result);
@@ -144,7 +144,6 @@
                         $('#edit-btn').click(function(){
                             $('#myModal1 #content-edit').remove();
                             const data = {
-                                _method: 'PUT',
                                 _token: token,
                                 firstname: $('#firstname').val(),
                                 lastname: $('#lastname').val(),
@@ -158,7 +157,7 @@
                             $.ajax({
                                 type : "post",
                                 dataType : "json",
-                                url : "/admin/users/" + id,
+                                url : "/admin/edit/" + id,
                                 data : data,
                                 success : function(result)
                                 {

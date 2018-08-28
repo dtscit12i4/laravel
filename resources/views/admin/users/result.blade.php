@@ -35,11 +35,9 @@
                                 <td>{{ $user->role ? 'Admin' : 'NormalUser' }}</td>
                                 <td>
                                     
-                                    <form method="POST" action="{{ route('users.destroy', $user->id) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                   <button class = 'btn btn-success btn-sm' type="submit" onclick='return confirm("Ban chac chan muon xoa?")'>Delete</button>
-                                   <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success btn-sm" onclick='return confirm("Ban chac chan muon sua?")'>Edit</a>
+                                    <form method="POST" action="/admin/search/$user->id">
+                                    <button class='btn btn-success btn-sm delete-user' data-id="{{ $user->id }}">Delete</button>
+                                    <a href="javascript:void(0)" data-id="{{ $user->id }}" class="btn btn-success btn-sm edit-user">Edit</a>
                                     </form>
                                 </td>
 

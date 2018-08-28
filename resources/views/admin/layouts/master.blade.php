@@ -67,7 +67,7 @@
 
         <div class="content">
             <div class="container-fluid">
-                <form class="form-inline" action="/admin/users" method="post">
+                <form class="form-inline" action="/admin/search" method="post">
                     @csrf
                     <input type="text" name="tukhoa" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Search...">
                     <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="roles">
