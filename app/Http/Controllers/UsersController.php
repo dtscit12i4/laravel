@@ -1,85 +1,70 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\AdminUser;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Http\Requests\EditUser;
+use App\Http\Requests\RegisterUser;
+use App\Http\Service\UserService;
 
 class UsersController extends Controller
 {
 
-    public function index() {
-        $users = AdminUser::all();
-        return view('admin.users.index', compact('users'));
+    public function __construct()
+    {
+        $users = User::select('role')->groupby('role')->get();
+        view()->share('userss',$users);
     }
 
-    public function show($id) {
-        $users = AdminUser::find($id);
-
-        echo '<p>'.$users->login_name.'</p>';
+    public function getAdd() {
+        return view('users.create');
     }
 
-    public function getdata($id) {
-        $user = AdminUser::find($id);
-
-        return view('admin.users.edit1', ['user' => $user]);
+    public function confirmAdd(RegisterUser $request) {
+        return view('users.createconfirm', ['user' => $request->all()]);
     }
 
-    public function destroy($id) {
-        $users = AdminUser::all();
-        // Find the user
-        AdminUser::destroy($id);
-
-        // Return array back to user details page
-        if ($users->count()) {
-            return redirect()->route('home');
-        } else {
-            return redirect()->route('login');
-        }
+    public function postAdd(Request $request) {
+        $users = UserService::postAdd($request);
+        session()->flash('msg','You have been created user successful');
+        
+        return redirect("/user");
 
     }
 
-    public function store(Request $request) {
-        $tukhoa = $request->tukhoa;
-        $roles = $request->roles;
-        $users = AdminUser::on();
-        $condition = [];
-        if (isset($tukhoa)) {
-            $condition[] = ['login_name','like','%'.$tukhoa.'%'];
-        }
-        if (isset($roles)) {
-            $condition[] = ['role','=',$roles];
-        }
-        $result = $users->where($condition)->get();
-        return view('admin.users.result', compact('result'));
+    public function index(Request $request) {
+        $users = UserService::index($request);
+        return view('users.index', compact('users'));
     }
 
-    public function edit($id) {
-        $users = AdminUser::find($id);
-        return view('admin.users.edit', ['users' => $users]);
+    public function confirmUserDelete(Request $request) {
+        $user = UserService::confirmUserDelete($request);
+        return view('users.deleteconfirm', ['user' => $user]);
     }
 
-    public function update(EditUser $request, $id) {
-        $user = AdminUser::find($id);
-        // Validate the user
-        // $request->validate([
-        //    'firstname' => 'required',
-        //    'lastname' => 'required',
-        // ]);
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->role = $request->role;
-        if ($request->password) {
-            $user->password = bcrypt($request->password);
-        }
-        // Save the data
-        $user->save();
+    public function destroy(Request $request) {
+        User::destroy($request->id);
+        session()->flash('msg','You have been delete successful');
+        return redirect("/user");
+    }
+
+    public function getUserEdit(Request $request) {
+        $user = UserService::getUserEdit($request);
+        return view('users.edit', ['user' => $user]);
+    }
+
+    public function confirmEditUser(EditUser $request) {
+        return view('users.editconfirm', ['user' => $request->all()]);
+    }
+
+    public function editUser(Request $request) {
+        UserService::editUser($request);
         session()->flash('msg','You have been edit successful');
-        // Sign the user in
-        // auth()->login($user);
-
-        // Redirect to
-        return 1;
+        
+        return redirect("/user");
 
     }
+
 }

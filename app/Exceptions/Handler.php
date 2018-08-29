@@ -2,9 +2,7 @@
 
 namespace App\Exceptions;
 
-use function Couchbase\defaultDecoder;
 use Exception;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -31,8 +29,6 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
      * @param  \Exception  $exception
      * @return void
      */
@@ -46,29 +42,10 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
     }
-
-    public function unauthenticated($request, AuthenticationException $exception)
-    {
-
-        $guard = array_get($exception->guards(), 0);
-
-        switch ($guard) {
-            case 'admin':
-                return redirect('/admin/login');
-            break;
-
-            default:
-                return redirect('/user/login');
-                break;
-
-        }
-
-    }
-
 }
