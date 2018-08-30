@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CreateUsersTable extends Migration
 {
+    use SoftDeletes;
     /**
      * Run the migrations.
      *
@@ -22,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('role');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

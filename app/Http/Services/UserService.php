@@ -37,7 +37,7 @@ class UserService
             'role' => request()->role
         ];
         if (request()->password) {
-            $data['password'] = bcrypt(request()->password);
+            $data['password'] = request()->password;
         }
         // User::where('id', request()->id)
         User::find(request()->id)->update($data);
@@ -45,7 +45,7 @@ class UserService
 	}
 
 	public static function destroy() {
-        User::destroy(request()->id);
+        User::find(request()->id)->delete();
         session()->flash('msg',Messages::DELETE_SUCCESS);
 	}
 
@@ -58,7 +58,7 @@ class UserService
             'firstname' => request()->firstname,
             'lastname' => request()->lastname,
             'login_name' => request()->login_name,
-            'password' => bcrypt(request()->password),
+            'password' => request()->password,
             'role' => request()->role,
         ]);
         session()->flash('msg',Messages::ADD_SUCCESS);
