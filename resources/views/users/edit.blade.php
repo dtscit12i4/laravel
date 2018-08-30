@@ -29,7 +29,7 @@
                         @endif
 
 
-                        <form action="/user/editconfirm" method="post">
+                        <form action="{{route('user.confirmedituser')}}" method="post">
 
                             @csrf
                             <input type="hidden" name="id" value="{{ $user->id ?? old('id') }}">

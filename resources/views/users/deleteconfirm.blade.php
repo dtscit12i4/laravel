@@ -14,7 +14,7 @@
 
                     <div class="panel-body">
 
-                        <form action="/user/delete" method="post">
+                        <form action="{{route('user.destroy')}}" method="post">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $user->id }}">

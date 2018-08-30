@@ -14,7 +14,7 @@
 
                     <div class="panel-body">
 
-                        <form action="/user/add" method="post">
+                        <form action="{{route('user.postadd')}}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label for="name">First Name:</label>

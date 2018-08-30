@@ -14,7 +14,7 @@
 
                     <div class="panel-body">
 
-                        <form action="/user/edit" method="post">
+                        <form action="{{route('user.editUser')}}" method="post">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="id" value="{{ $user['id'] }}">

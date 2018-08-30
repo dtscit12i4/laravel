@@ -7,64 +7,63 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Requests\EditUser;
 use App\Http\Requests\RegisterUser;
-use App\Http\Service\UserService;
+use App\Http\Services\UserService;
 
 class UsersController extends Controller
 {
-
+    /**
+     * Add User Module
+     */
     public function __construct()
     {
-        $users = User::select('role')->groupby('role')->get();
-        view()->share('userss',$users);
+        // middleware
     }
-
+    // show add screen
     public function getAdd() {
         return view('users.create');
     }
-
+    // show confirmation screen
     public function confirmAdd(RegisterUser $request) {
+
         return view('users.createconfirm', ['user' => $request->all()]);
     }
-
-    public function postAdd(Request $request) {
-        $users = UserService::postAdd($request);
-        session()->flash('msg','You have been created user successful');
+    // save
+    public function postAdd() {
+        UserService::postAdd();
         
-        return redirect("/user");
-
+        return redirect(route('user.index'));
     }
+    // show all user
+    public function index() {
+        $users = UserService::index();
 
-    public function index(Request $request) {
-        $users = UserService::index($request);
         return view('users.index', compact('users'));
     }
+    // show screen confirm delete
+    public function confirmUserDelete() {
+        $user = UserService::confirmUserDelete();
 
-    public function confirmUserDelete(Request $request) {
-        $user = UserService::confirmUserDelete($request);
         return view('users.deleteconfirm', ['user' => $user]);
     }
-
-    public function destroy(Request $request) {
-        User::destroy($request->id);
-        session()->flash('msg','You have been delete successful');
-        return redirect("/user");
+    // delete user
+    public function destroy() {
+        UserService::destroy();
+        return redirect(route('user.index'));
     }
-
-    public function getUserEdit(Request $request) {
-        $user = UserService::getUserEdit($request);
+    // show screen edit user
+    public function getUserEdit() {
+        $user = UserService::getUserEdit();
         return view('users.edit', ['user' => $user]);
     }
-
+    // show screen confirm edit
     public function confirmEditUser(EditUser $request) {
         return view('users.editconfirm', ['user' => $request->all()]);
     }
+    // edit user
+    public function editUser() {
+        UserService::editUser();
 
-    public function editUser(Request $request) {
-        UserService::editUser($request);
-        session()->flash('msg','You have been edit successful');
-        
-        return redirect("/user");
-
+        return redirect(route('user.index'));
     }
 
 }

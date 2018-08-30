@@ -29,7 +29,7 @@
                         @endif
 
 
-                        <form action="/user/addconfirm" method="post">
+                        <form action="{{route('user.confirmadd')}}" method="post">
 
                             @csrf
 
