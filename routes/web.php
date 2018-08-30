@@ -1,22 +1,22 @@
 <?php
-    
-    Route::get('/user', 'UsersController@index');
+    Route::prefix('user')->group(function () {
+	    Route::get('/', 'UsersController@index');
 
-    Route::match(['get', 'post'],'/user/edit', 'UsersController@getUserEdit');
+	    Route::match(['get', 'post'],'edit', 'UsersController@getUserEdit');
 
-    Route::post('/user/editconfirm', 'UsersController@confirmEditUser');
+	    Route::post('editconfirm', 'UsersController@confirmEditUser');
 
-    Route::put('/user/edit', 'UsersController@editUser');
+	    Route::put('edit', 'UsersController@editUser');
 
-    Route::post('/user/deleteconfirm', 'UsersController@confirmUserDelete');
+	    Route::post('deleteconfirm', 'UsersController@confirmUserDelete');
 
-    Route::delete('/user/delete', 'UsersController@destroy');
-    
-    Route::get('/user/add','UsersController@getAdd');
+	    Route::delete('delete', 'UsersController@destroy');
+	    
+	    Route::get('add','UsersController@getAdd');
 
-    Route::post('/user/addconfirm','UsersController@confirmAdd');
+	    Route::post('addconfirm','UsersController@confirmAdd');
 
-    Route::post('/user/add','UsersController@postAdd');
-
+	    Route::post('add','UsersController@postAdd');
+	});
 
 
