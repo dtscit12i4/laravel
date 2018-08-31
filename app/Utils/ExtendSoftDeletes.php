@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Services;
-
-// use App\Http\Services\ExtendSoftDeletingScope;
+namespace App\Utils;
 
 trait ExtendSoftDeletes
 {

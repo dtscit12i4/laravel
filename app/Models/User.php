@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 // use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Http\Services\ExtendSoftDeletes;
+use App\Utils\ExtendSoftDeletes;
 
 class User extends Model
 {

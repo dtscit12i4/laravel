@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Utils;
 
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Builder;
