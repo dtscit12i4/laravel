@@ -4,10 +4,14 @@ namespace App\Http\Services;
 
 use App\Models\User;
 use App\Enums\Messages;
+use Illuminate\Support\Facades\Input;
 
 class UserService
 {
-	public static function index() {
+    /**
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function index() {
         $name = request()->login_name;
         $role = request()->role;
         
@@ -22,8 +26,7 @@ class UserService
         if (isset($role)) {
             $users->where('role', $role);
         }
-
-        return $users->get();
+        return $users->paginate(2)->appends(Input::except(['page', '_token']));
 	}
 
 	public static function getUserEdit() {

@@ -77,6 +77,9 @@
 
                 </div>
             </div>
+            <div style="text-align: center">
+                {{ $users->links() }}
+            </div>
         </div>
     </div>
 
