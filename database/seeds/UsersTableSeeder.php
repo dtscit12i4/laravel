@@ -17,7 +17,8 @@ class UsersTableSeeder extends Seeder
             'lastname' => 'Dang',
             'login_name' => 'dtscit12i4',
             'password' => 'secret', // secret
-            'role' => 1
+            'role' => 1,
+            'deleted_at_by' => 0
         ]);
 
         User::create([
@@ -25,7 +26,8 @@ class UsersTableSeeder extends Seeder
             'lastname' => 'Dang',
             'login_name' => 'vudang',
             'password' => 'secret', // secret
-            'role' => 1
+            'role' => 1,
+            'deleted_at_by' => 0
         ]);
 
         User::create([
@@ -33,7 +35,8 @@ class UsersTableSeeder extends Seeder
             'lastname' => 'Dang',
             'login_name' => 'truongdang',
             'password' => 'secret', // secret
-            'role' => 1
+            'role' => 1,
+            'deleted_at_by' => 0
         ]);
 
         User::create([
@@ -41,7 +44,8 @@ class UsersTableSeeder extends Seeder
             'lastname' => 'Truong',
             'login_name' => 'huytruong',
             'password' => 'secret', // secret
-            'role' => 1
+            'role' => 1,
+            'deleted_at_by' => 0
         ]);
 
         User::create([
@@ -49,7 +53,8 @@ class UsersTableSeeder extends Seeder
             'lastname' => 'Tran',
             'login_name' => 'nhutran',
             'password' => 'secret', // secret
-            'role' => 0
+            'role' => 0,
+            'deleted_at_by' => 0
         ]);
     }
 }

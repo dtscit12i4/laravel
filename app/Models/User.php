@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
+// use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Services\ExtendSoftDeletes;
 
 class User extends Model
 {
 
-    use SoftDeletes;
+    // use SoftDeletes;
+    use ExtendSoftDeletes;
     protected $dates = ['deleted_at'];
     /**
      * The attributes that are mass assignable.
@@ -16,7 +20,7 @@ class User extends Model
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'login_name', 'role', 'password',
+        'firstname', 'lastname', 'login_name', 'role', 'password', 'deleted_at_by',
     ];
 
     /**

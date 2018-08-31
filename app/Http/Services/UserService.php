@@ -45,7 +45,7 @@ class UserService
 	}
 
 	public static function destroy() {
-        User::find(request()->id)->delete();
+        User::where('id',request()->id)->delete();
         session()->flash('msg',Messages::DELETE_SUCCESS);
 	}
 
